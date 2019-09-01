@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/ryomak/ouin-line-bot/line-bot/src/ouin"
 	"github.com/ryomak/ouin-line-bot/line-bot/src/repository"
 )
 
@@ -43,7 +42,7 @@ type Source struct {
 }
 
 func MakeMessge(str string) string {
-  tokens := repository.GetToken(str)
+	tokens := repository.GetToken(str)
 	out := ""
 	for _, v := range tokens.MaResult.WordList.Word {
 		if strings.Index(v.Pos, "助") != -1 {
