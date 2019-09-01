@@ -6,7 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ryomak/login-bonus-manager/line-bot/src/repository"
+	"github.com/ryomak/ouin-line-bot/line-bot/src/repository"
+	"github.com/ryomak/ouin-line-bot/line-bot/src/ouin"
 )
 
 func UnmarshalLineRequest(data []byte) (LineRequest, error) {
@@ -43,21 +44,25 @@ type Source struct {
 	Type   string `json:"type"`
 }
 
-func MakeMessge(id, str string) string {
-	if strings.Index(str, "一覧表示") != -1 {
-		homelist := repository.GetHomeList(id)
-		res := ""
-		for _, v := range homelist {
-			res += v.Value + "\n"
-		}
-		return res
-	}
-	log.Println("ぉっl")
-	repMessage := []string{
-		"できたのはすごいね",
-		"はやばすぎる",
-		"もうオンリーワンだね",
-	}
-	repository.SetHome(&repository.Home{ID: id, Value: str})
-	return "「" + str + "」" + repMessage[int(time.Now().UnixNano())%len(repMessage)]
+func MakeMessge(str string) string {
+  tokens := ouin.GetHiraganas(str)
+  out := ""
+  for _,v := range tokens {
+    if strings.Index(v.Type,"助") != -1  {
+      out += v.Surface
+    }else{
+      out += trim(repository.GetOuinList(v.Hiragana)[0].Heading)
+    }
+  }
+}
+
+func trim(str string) string {
+  res := ""
+  first := 0
+  for i, c := range str {
+     if c == '【' {
+     first = i
+     }
+  }
+  return str[i+1:len(str)-1]
 }

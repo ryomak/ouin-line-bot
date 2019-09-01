@@ -6,6 +6,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/ryomak/ouin-line-bot/line-bot/src/line"
 )
 
 func LineHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
@@ -22,7 +23,7 @@ func LineHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyR
 		log.Fatal(err)
 	}
 	message := line.MakeMessge(myLineRequest.Events[0].Message.ID, myLineRequest.Events[0].Message.Text)
-  log.Println(message)
+	log.Println(message)
 	if _, err = bot.ReplyMessage(myLineRequest.Events[0].ReplyToken, linebot.NewTextMessage(message)).Do(); err != nil {
 		log.Fatal(err)
 	}
