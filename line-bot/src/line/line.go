@@ -52,15 +52,15 @@ func MakeMessge(str string) string {
 			out += trim(repository.GetOuinList(v.Hiragana)[0].Heading)
 		}
 	}
+  return out
 }
 
 func trim(str string) string {
-	res := ""
 	first := 0
 	for i, c := range str {
 		if c == '【' {
 			first = i
 		}
 	}
-	return str[i+1 : len(str)-1]
+	return str[first+1 : len(str)-1]
 }
