@@ -1,4 +1,4 @@
-module github.com/ryomak/login-bonus-manager
+module github.com/ryomak/ouin-line-bot
 
 go 1.12
 

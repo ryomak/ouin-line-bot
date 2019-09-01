@@ -2,12 +2,10 @@ package line
 
 import (
 	"encoding/json"
-	"log"
 	"strings"
-	"time"
 
-	"github.com/ryomak/ouin-line-bot/line-bot/src/repository"
 	"github.com/ryomak/ouin-line-bot/line-bot/src/ouin"
+	"github.com/ryomak/ouin-line-bot/line-bot/src/repository"
 )
 
 func UnmarshalLineRequest(data []byte) (LineRequest, error) {
@@ -45,24 +43,24 @@ type Source struct {
 }
 
 func MakeMessge(str string) string {
-  tokens := ouin.GetHiraganas(str)
-  out := ""
-  for _,v := range tokens {
-    if strings.Index(v.Type,"助") != -1  {
-      out += v.Surface
-    }else{
-      out += trim(repository.GetOuinList(v.Hiragana)[0].Heading)
-    }
-  }
+	tokens := ouin.GetHiraganas(str)
+	out := ""
+	for _, v := range tokens {
+		if strings.Index(v.Type, "助") != -1 {
+			out += v.Surface
+		} else {
+			out += trim(repository.GetOuinList(v.Hiragana)[0].Heading)
+		}
+	}
 }
 
 func trim(str string) string {
-  res := ""
-  first := 0
-  for i, c := range str {
-     if c == '【' {
-     first = i
-     }
-  }
-  return str[i+1:len(str)-1]
+	res := ""
+	first := 0
+	for i, c := range str {
+		if c == '【' {
+			first = i
+		}
+	}
+	return str[i+1 : len(str)-1]
 }
