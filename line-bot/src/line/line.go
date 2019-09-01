@@ -57,10 +57,11 @@ func MakeMessge(str string) string {
 
 func trim(str string) string {
 	first := 0
-	for i, c := range str {
+  runeStr := []rune(str)
+	for i, c := range runeStr {
 		if c == '【' {
 			first = i
 		}
 	}
-	return str[first+1 : len(str)-1]
+	return string(runeStr[first+1 : len(runeStr)-1])
 }
