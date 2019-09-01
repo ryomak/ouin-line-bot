@@ -43,21 +43,21 @@ type Source struct {
 }
 
 func MakeMessge(str string) string {
-	tokens := ouin.GetHiraganas(str)
+  tokens := repository.GetToken(str)
 	out := ""
-	for _, v := range tokens {
-		if strings.Index(v.Type, "助") != -1 {
+	for _, v := range tokens.MaResult.WordList.Word {
+		if strings.Index(v.Pos, "助") != -1 {
 			out += v.Surface
 		} else {
-			out += trim(repository.GetOuinList(v.Hiragana)[0].Heading)
+			out += trim(repository.GetOuinList(v.Reading)[0].Heading)
 		}
 	}
-  return out
+	return out
 }
 
 func trim(str string) string {
 	first := 0
-  runeStr := []rune(str)
+	runeStr := []rune(str)
 	for i, c := range runeStr {
 		if c == '【' {
 			first = i
